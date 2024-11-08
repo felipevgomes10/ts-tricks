@@ -1,14 +1,13 @@
 import type { Merge } from "./merge.type";
 
-export type MergeRercursive<
-  TArr extends readonly object[],
-  T1 = {}
-> = TArr extends [infer T2 extends object, ...infer TRest extends object[]]
-  ? MergeRercursive<TRest, Merge<T1, T2>>
+export type MergeRecursive<TArr extends object[], T1 = {}> = TArr extends [
+  infer T2 extends object,
+  ...infer TRest extends object[]
+]
+  ? MergeRecursive<TRest, Merge<T1, T2>>
   : T1;
 
 // Example
-
 type User = {
   name: string;
   age: number;
@@ -29,4 +28,4 @@ type User4 = {
   password: number;
 };
 
-type MergedUser = MergeRercursive<[User, User2, User3, User4]>;
+type MergedUser = MergeRecursive<[User, User2, User3, User4]>;
